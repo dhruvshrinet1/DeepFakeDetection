@@ -44,32 +44,38 @@ optimizer = torch.optim.Adam(model.parameters(), lr=LR)
 
 print(model)
 
-# Training loop
-for epoch in range(EPOCHS):
-    model.train()
-    running_loss = 0
-    for imgs, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS}"):
-        imgs, labels = imgs.to(DEVICE), labels.float().unsqueeze(1).to(DEVICE)
-        outputs = model(imgs)
-        loss = criterion(outputs, labels)
+# # Training loop
+# for epoch in range(EPOCHS):
+#     model.train()
+#     running_loss = 0
+#     for imgs, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS}"):
+#         imgs, labels = imgs.to(DEVICE), labels.float().unsqueeze(1).to(DEVICE)
+#         outputs = model(imgs)
+#         loss = criterion(outputs, labels)
         
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
+#         optimizer.zero_grad()
+#         loss.backward()
+#         optimizer.step()
+#         running_loss += loss.item()
     
-    print(f"Epoch {epoch+1} Loss: {running_loss / len(train_loader):.4f}")
+#     print(f"Epoch {epoch+1} Loss: {running_loss / len(train_loader):.4f}")
 
-# Validation
-model.eval()
-preds, targets = [], []
-with torch.no_grad():
-    for imgs, labels in val_loader:
-        imgs = imgs.to(DEVICE)
-        outputs = model(imgs)
-        pred_labels = (torch.sigmoid(outputs) > 0.5).cpu().int().squeeze()
-        preds += pred_labels.tolist()
-        targets += labels.tolist()
+# # Validation
+# # model.eval()
+# # preds, targets = [], []
+# # with torch.no_grad():
+# #     for imgs, labels in val_loader:
+# #         imgs = imgs.to(DEVICE)
+# #         outputs = model(imgs)
+# #         pred_labels = (torch.sigmoid(outputs) > 0.5).cpu().int().squeeze()
+# #         preds += pred_labels.tolist()
+# #         targets += labels.tolist()
 
-print("\nValidation Results:")
-print(classification_report(targets, preds, target_names=full_dataset.classes))
+# # print("\nValidation Results:")
+# # print(classification_report(targets, preds, target_names=full_dataset.classes))
+
+
+# Save trained model
+SAVE_PATH = "resnet50_deepfake_model.pth"
+torch.save(model.state_dict(), SAVE_PATH)
+print(f"Model saved to {SAVE_PATH}")

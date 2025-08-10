@@ -38,18 +38,19 @@ def extract_faces(video_path, save_dir, every_n_frames=5):
             if face is not None:
                 face = face.permute(1, 2, 0).byte().cpu().numpy()
     
-    # Skip saving if the image is mostly black
-            if face.mean() < 5:
-                print(f"Skipped dark frame at {video_name}_{frame_idx}")
-                continue
+                # Skip saving if the image is mostly black
+                if face.mean() < 5:
+                    print(f"Skipped dark frame at {video_name}_{frame_idx}")
+                    frame_idx += 1
+                    continue
     
-            filename = f"{video_name}_{frame_idx}.jpg"
-            filepath = os.path.join(save_dir, filename)
-            cv2.imwrite(filepath, cv2.cvtColor(face, cv2.COLOR_RGB2BGR))
-                    
-            saved += 1
-            frame_idx += 1
-            cap.release()
+                filename = f"{video_name}_{frame_idx}.jpg"
+                filepath = os.path.join(save_dir, filename)
+                cv2.imwrite(filepath, cv2.cvtColor(face, cv2.COLOR_RGB2BGR))
+                        
+                saved += 1
+        frame_idx += 1
+    cap.release()
     return saved
 
 
