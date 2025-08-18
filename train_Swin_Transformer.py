@@ -32,32 +32,46 @@ train_ds, val_ds = random_split(full_dataset, [train_size, val_size])
 train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
 val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False)
 
-# Swin Transformer model (binary classification)
-model = timm.create_model('swin_base_patch4_window7_224', pretrained=True, num_classes=1)
-model = model.to(DEVICE)
+# # Swin Transformer model (binary classification)
+# model = timm.create_model('swin_base_patch4_window7_224', pretrained=True, num_classes=1)
+# model = model.to(DEVICE)
 
-# Loss & Optimizer
-criterion = nn.BCEWithLogitsLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+# # Loss & Optimizer
+# criterion = nn.BCEWithLogitsLoss()
+# optimizer = torch.optim.Adam(model.parameters(), lr=LR)
 
-# Training loop
-for epoch in range(EPOCHS):
-    model.train()
-    running_loss = 0.0
-    for imgs, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS}"):
-        imgs, labels = imgs.to(DEVICE), labels.float().unsqueeze(1).to(DEVICE)
-        outputs = model(imgs)
-        loss = criterion(outputs, labels)
+# # Training loop
+# for epoch in range(EPOCHS):
+#     model.train()
+#     running_loss = 0.0
+#     for imgs, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS}"):
+#         imgs, labels = imgs.to(DEVICE), labels.float().unsqueeze(1).to(DEVICE)
+#         outputs = model(imgs)
+#         loss = criterion(outputs, labels)
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
+#         optimizer.zero_grad()
+#         loss.backward()
+#         optimizer.step()
+#         running_loss += loss.item()
 
-    print(f"Epoch {epoch+1} Loss: {running_loss / len(train_loader):.4f}")
+#     print(f"Epoch {epoch+1} Loss: {running_loss / len(train_loader):.4f}")
 
 # Validation
+
+import torch
+
+# Recreate model architecture
+model = timm.create_model(
+    'swin_base_patch4_window7_224',
+    pretrained=False,
+    num_classes=1
+)
+# Load weights
+state_dict = torch.load('swin_deepfake_model.pth', map_location=DEVICE)
+model.load_state_dict(state_dict)
+model = model.to(DEVICE)
 model.eval()
+
 preds, targets = [], []
 with torch.no_grad():
     for imgs, labels in val_loader:
@@ -70,5 +84,5 @@ with torch.no_grad():
 print(classification_report(targets, preds, target_names=class_names))
 
 # Save model
-torch.save(model.state_dict(), "swin_deepfake_model.pth")
-print("✅ Model saved as swin_deepfake_model.pth")
+# torch.save(model.state_dict(), "swin_deepfake_model.pth")
+# print("✅ Model saved as swin_deepfake_model.pth")

@@ -39,27 +39,27 @@ val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE)
 model = timm.create_model("vit_base_patch16_224", pretrained=True, num_classes=1)
 model.to(DEVICE)
 
-# Loss & Optimizer
-criterion = nn.BCEWithLogitsLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+# # Loss & Optimizer
+# criterion = nn.BCEWithLogitsLoss()
+# optimizer = torch.optim.Adam(model.parameters(), lr=LR)
 
-# Training Loop
-for epoch in range(EPOCHS):
-    model.train()
-    running_loss = 0
-    for imgs, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS}"):
-        imgs = imgs.to(DEVICE)
-        labels = labels.float().unsqueeze(1).to(DEVICE)
+# # Training Loop
+# for epoch in range(EPOCHS):
+#     model.train()
+#     running_loss = 0
+#     for imgs, labels in tqdm(train_loader, desc=f"Epoch {epoch+1}/{EPOCHS}"):
+#         imgs = imgs.to(DEVICE)
+#         labels = labels.float().unsqueeze(1).to(DEVICE)
 
-        outputs = model(imgs)
-        loss = criterion(outputs, labels)
+#         outputs = model(imgs)
+#         loss = criterion(outputs, labels)
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
+#         optimizer.zero_grad()
+#         loss.backward()
+#         optimizer.step()
+#         running_loss += loss.item()
     
-    print(f"Epoch {epoch+1} Loss: {running_loss / len(train_loader):.4f}")
+#     print(f"Epoch {epoch+1} Loss: {running_loss / len(train_loader):.4f}")
 
 # Evaluation
 model.eval()

@@ -1,0 +1,6 @@
+__pycache__/,
+st_htc_deepfake_model.pth,
+swin_deepfake_model.pth,
+custom_cnn_deepfake_model.pth,
+ mmhtc_best.pth,
+  st_htc_deepfake_model.pth

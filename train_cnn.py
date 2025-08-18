@@ -60,19 +60,19 @@ print(model)
     
 #     print(f"Epoch {epoch+1} Loss: {running_loss / len(train_loader):.4f}")
 
-# # Validation
-# # model.eval()
-# # preds, targets = [], []
-# # with torch.no_grad():
-# #     for imgs, labels in val_loader:
-# #         imgs = imgs.to(DEVICE)
-# #         outputs = model(imgs)
-# #         pred_labels = (torch.sigmoid(outputs) > 0.5).cpu().int().squeeze()
-# #         preds += pred_labels.tolist()
-# #         targets += labels.tolist()
+# Validation
+# model.eval()
+# preds, targets = [], []
+# with torch.no_grad():
+#     for imgs, labels in val_loader:
+#         imgs = imgs.to(DEVICE)
+#         outputs = model(imgs)
+#         pred_labels = (torch.sigmoid(outputs) > 0.5).cpu().int().squeeze()
+#         preds += pred_labels.tolist()
+#         targets += labels.tolist()
 
-# # print("\nValidation Results:")
-# # print(classification_report(targets, preds, target_names=full_dataset.classes))
+# print("\nValidation Results:")
+# print(classification_report(targets, preds, target_names=full_dataset.classes))
 
 
 # Save trained model
