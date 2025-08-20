@@ -1,0 +1,15 @@
+{
+  "mode": "fft_only",
+  "ckpt": "mmhtc_best_fft_only.pth",
+  "val_auc": 0.6333333333333333,
+  "val_acc@0.5": 0.8051948051948052,
+  "val_f1@0.5": 0.8920863309352518,
+  "youden_t": 0.7893833518028259,
+  "val_bal_acc@youden": 0.6338709677419355,
+  "cm@youden": {
+    "tn": 12,
+    "fp": 3,
+    "fn": 33,
+    "tp": 29
+  }
+}

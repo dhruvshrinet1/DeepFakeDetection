@@ -1,0 +1,15 @@
+{
+  "mode": "rgb_fft_temporal",
+  "ckpt": "mmhtc_best_rgb_fft_temporal.pth",
+  "val_auc": 0.5763440860215053,
+  "val_acc@0.5": 0.8051948051948052,
+  "val_f1@0.5": 0.8920863309352518,
+  "youden_t": 0.8586652874946594,
+  "val_bal_acc@youden": 0.635483870967742,
+  "cm@youden": {
+    "tn": 6,
+    "fp": 9,
+    "fn": 8,
+    "tp": 54
+  }
+}

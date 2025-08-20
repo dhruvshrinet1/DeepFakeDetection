@@ -1,0 +1,15 @@
+{
+  "mode": "rgb_only",
+  "ckpt": "mmhtc_best_rgb_only.pth",
+  "val_auc": 0.556989247311828,
+  "val_acc@0.5": 0.8051948051948052,
+  "val_f1@0.5": 0.8920863309352518,
+  "youden_t": 0.8065575361251831,
+  "val_bal_acc@youden": 0.5870967741935484,
+  "cm@youden": {
+    "tn": 6,
+    "fp": 9,
+    "fn": 14,
+    "tp": 48
+  }
+}
